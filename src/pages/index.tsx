@@ -3,6 +3,8 @@ import MainLayout from '../layouts'
 import styles from '../styles/Home.module.scss'
 import Article from '../components/article'
 import Nav from "../components/nav";
+import WeatherNews from "../components/weather-news";
+import PickupArticle from "../components/pickup-article";
 
 const Home = (props) => {
   return (
@@ -20,6 +22,10 @@ const Home = (props) => {
 				<div className={styles.main}>
 					<Article title="headline" articles={props.topArticles} />
 				</div>
+				<div className={styles.aside}>
+					<WeatherNews weatherNews={props.weatherNews} />
+					<PickupArticle articles={props.pickupArticles} />
+				</div>
 			</div>
 		</MainLayout>
 	);
@@ -34,11 +40,33 @@ export const getStaticProps = async () => {
 	const topJson = await topRes.json();
 	const topArticles = topJson?.articles;
 
+	// OpenWeatherMapの天気の情報を取得
+	const lat = 35.4122; // 取得したい地域の緯度と経度(今回指定したのは東京)
+	const lon = 139.413;
+	const exclude = "hourly,minutely"; // 取得しない情報(1時間ごとの天気情報と1分間ごとの天気情報)
+	const weatherRes = await fetch(
+		`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=${exclude}&appid=da80d926751352299184434bda992a23`
+	);
+	const weatherJson = await weatherRes.json();
+	const weatherNews = weatherJson;
+
+	// NewsAPIのピックアップ記事の情報を取得
+	const keyword = "software"; // キーワードで検索(ソフトウェア)
+	const sortBy = "popularity"; // 表示順位(人気順)
+	const pickupPageSize = 5; // ページサイズ(5)
+	const pickupRes = await fetch(
+		`https://newsapi.org/v2/everything?q=${keyword}&language=jp&sortBy=${sortBy}&pageSize=${pickupPageSize}&apiKey=94f186d7b6584b24a150a5bf7748393f`
+	);
+	const pickupJson = await pickupRes.json();
+	const pickupArticles = pickupJson?.articles;
+
 	return {
 		props: {
 			topArticles,
+			weatherNews,
+			pickupArticles,
 		},
-		revalidate: 60 * 10,
+		revalidate: 60,
 	};
 };
 
