@@ -5,7 +5,7 @@ import Nav from "../../components/nav";
 import MainLayout from "../../layouts/index";
 import styles from "../../styles/Home.module.scss";
 
-function Topic(props) {
+function Topic(props: any) {
 	const router = useRouter();
 	if (router.isFallback) {
 		return <div>Loading...</div>;
@@ -38,7 +38,7 @@ export async function getStaticPaths() {
 	};
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params }: any) {
 	const topicRes = await fetch(
 		`https://newsapi.org/v2/top-headlines?country=jp&category=${params.id}&country=jp&apiKey=94f186d7b6584b24a150a5bf7748393f`
 	);

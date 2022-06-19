@@ -6,7 +6,7 @@ import Nav from "../components/nav";
 import WeatherNews from "../components/weather-news";
 import PickupArticle from "../components/pickup-article";
 
-const Home = (props) => {
+const Home = (props: any) => {
   return (
 		<MainLayout>
 			<Head>
