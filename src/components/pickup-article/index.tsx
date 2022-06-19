@@ -7,7 +7,7 @@ const PickupArticle: React.FC<Props> = ({ articles }) => {
 	return (
 		<section className={styles.pickup}>
 			<h1 className={styles.article__heading}>PickUp</h1>
-			{articles.map((article, index) => {
+			{articles?.map((article, index) => {
 				const time =
 					moment(article.publishedAt || moment.now())
 						.fromNow()

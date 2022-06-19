@@ -6,9 +6,9 @@ const Article: React.FC<Props> = ({ articles, title }) => {
 	return (
 		<section className={styles.article}>
 			<div className={styles.article__heading}>
-				<h1>{title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}</h1>
+				<h1>{title ? title.charAt(0).toUpperCase() + title.slice(1).toLowerCase() : null}</h1>
 			</div>
-			{articles.map((article, index) => {
+			{articles?.map((article, index) => {
 				const time = moment(article.publishedAt || moment.now())
 					.fromNow()
 					.slice(0, 1);

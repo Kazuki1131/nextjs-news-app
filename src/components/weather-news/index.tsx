@@ -6,10 +6,10 @@ import Props from "../types";
 const week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const WeatherNews: React.FC<Props> = ({ weatherNews }) => {
-	const currentWeatherMain = weatherNews.current.weather[0].main;
-	const currentWeatherTemp = weatherNews.current.temp;
+	const currentWeatherMain = weatherNews?.current.weather[0].main;
+	const currentWeatherTemp = weatherNews?.current.temp;
 	const currentWeatherIcon =
-		weatherNews.current.weather[0].icon.slice(0, 2) + "d";
+		weatherNews?.current.weather[0].icon.slice(0, 2) + "d";
 	return (
 		<section className={styles.weather}>
 			<h1>Tokyo</h1>
@@ -18,7 +18,7 @@ const WeatherNews: React.FC<Props> = ({ weatherNews }) => {
 					<div className={styles.weather__heading}>
 						<a>{currentWeatherMain}</a>
 						<p>
-							{currentWeatherTemp.toString().slice(0, 1)}
+							{currentWeatherTemp?.toString().slice(0, 1)}
 							<span>˚c</span>
 						</p>
 					</div>
@@ -34,7 +34,7 @@ const WeatherNews: React.FC<Props> = ({ weatherNews }) => {
 				</div>
 				<div className={styles.weather__weekly}>
 					<ul className={styles.weather__weekly__list}>
-						{weatherNews.daily.map((date, index) => {
+						{weatherNews?.daily.map((date, index) => {
 							const time = new Date(date.dt * 1000);
 							let day = week[time.getDay()];
 							const nowDay = week[new Date().getDay()];
